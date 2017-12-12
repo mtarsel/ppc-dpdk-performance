@@ -24,7 +24,7 @@
 %source code with highliting
 \lstset{basicstyle=\ttfamily,
 	backgroundcolor=\color{mygray},
-  	commentstyle=\color{blue},
+  	%commentstyle=\color{blue},
   	%keywordstyle=\color{blue}
 	language=bash,
 	xleftmargin=\parindent,
@@ -110,7 +110,8 @@ Any refernce to another section will be a clickable link to that section.
 \subsection{pktgen Machine (126)}
 
 \begin{lstlisting}
-# ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8:40-43/48-51].0"
+# ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 
+	--socket-mem=4096,4096 -- -T -P -m "[8:40-43/48-51].0"
 \end{lstlisting}
 
 Verify the \texttt{openvswitch.service} is running with systemctl
