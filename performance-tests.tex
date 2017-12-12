@@ -71,11 +71,6 @@ This test plan utilizes network name spaces (ns) to create virtual network endpo
 Each network name space will be an endpoint on our virtual switch. 
 The picture below represents the basic network topology this test plan will use. 
 
-\begin{figure}[H]
-\caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
-\hbox{\hspace{-0.5cm} \includegraphics{ping-path} }
-\end{figure}
-
 Looking at the diagram above we see 3 name spaces. One root name space, and 2 network name spaces. The veth peers for \texttt{namespace1} are \texttt{tap1} and \texttt{p1}. \texttt{tap1} device exists only inside namespace1. Much similar to a VM having a different Ethernet interface than the host machine. \textit{Please note that root namespace and host are used interchanbly throughout the document.} \texttt{p1} exists on the host and in this picture it has been added as a port to the OvS bridge named \texttt{br-1}. Additional information about name spaces may be found in appendix \ref{appendix:ns}.
 
 Commands below are going to be used most often in this test plan
@@ -106,6 +101,11 @@ Any refernce to another section will be a clickable link to that section.
 \section{RX Only Bandwidth using testpmd}
 %to many 1 line explanations that should not be indented.
 {\setlength{\parindent}{0cm}
+
+\begin{figure}[H]
+\caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
+\hbox{\includegraphics{rx-only} }
+\end{figure}
 
 \subsection{pktgen Machine (126)}
 
@@ -149,6 +149,11 @@ Pktgen:/> start 0
 \section{I/O forward bandwidth using testpmd across ports}
 %to many 1 line explanations that should not be indented.
 {\setlength{\parindent}{0cm}
+
+\begin{figure}[H]
+\caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
+\hbox{\hspace{-0.5cm} \includegraphics{i-o-2-ports} }
+\end{figure}
 
 \subsection{pktgen Machine (126)}
 
@@ -207,6 +212,11 @@ testpmd>
 \section{I/O forward bandwidth using testpmd within same port}
 %to many 1 line explanations that should not be indented.
 {\setlength{\parindent}{0cm}
+
+\begin{figure}[H]
+\caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
+\hbox{\hspace{-0.5cm} \includegraphics{i-o-1-port} }
+\end{figure}
 
 \subsection{pktgen Machine (126)}
 
