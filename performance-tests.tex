@@ -109,6 +109,7 @@ Any refernce to another section will be a clickable link to that section.
 
 \subsection{pktgen Machine (126)}
 
+% ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8:40-43/48-51].0"
 \begin{lstlisting}
 pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 
 	-- -T -P -m "[8:40-43/48-51].0"
@@ -118,6 +119,7 @@ Verify the \texttt{openvswitch.service} is running with systemctl
 
 \subsection{testpmd (124)}
 
+% Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=rxonly  --port-topology=chained
 \begin{lstlisting}[escapechar=!]
 Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 
 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a 
@@ -160,6 +162,7 @@ Pktgen:/> start 0
 
 \subsection{pktgen Machine (126)}
 
+% ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8:40-43/48-51].0,[56-59/64-67:72].1"
 \begin{lstlisting}
 pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 
 	-- -T -P -m "[8:40-43/48-51].0,[56-59/64-67:72].1"
@@ -167,6 +170,7 @@ pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=
 
 \subsection{testpmd (124)}
 
+% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \begin{lstlisting}[escapechar=!]
 testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512
 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
@@ -225,13 +229,15 @@ testpmd>
 
 \subsection{pktgen Machine (126)}
 
+% ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8-11/16-19:40-43/48-51].0"
 \begin{lstlisting}
-# ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 
+# pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 
 	--socket-mem=4096,4096 -- -T -P -m "[8-11/16-19:40-43/48-51].0"
 \end{lstlisting}
 
 \subsection{testpmd (124)}
 
+% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0-- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io 
 \begin{lstlisting}[escapechar=!]
 # testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0-- --txd=512 
 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
