@@ -1,12 +1,17 @@
 \documentclass[letter]{article}
 \usepackage[cm]{fullpage}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{hyperref}
 %package below is for adding images in exact place in code
 \usepackage{float}
 \usepackage[toc,page]{appendix}
+
+ 
+\setlength{\arrayrulewidth}{1mm}
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{2.5}
 
 \graphicspath{ {images/} }
 
@@ -103,9 +108,38 @@ Any refernce to another section will be a clickable link to that section.
 {\setlength{\parindent}{0cm}
 
 \begin{figure}[H]
-\caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
+\caption{some caption}
 \hbox{\includegraphics[scale=0.6]{rx-only} }
 \end{figure}
+
+\rowcolors{3}{green!80!yellow!50}{green!70!yellow!40}
+\begin{tabular}{ |p{3cm}|p{3cm}|p{3cm}|  }
+\hline
+\multicolumn{3}{|c|}{Country List} \\
+\hline
+Country Name     or Area Name& ISO ALPHA 2 Code &ISO ALPHA 3 \\
+\hline
+Afghanistan & AF &AFG \\
+Aland Islands & AX   & ALA \\
+Albania &AL & ALB \\
+Algeria    &DZ & DZA \\
+American Samoa & AS & ASM \\
+Andorra & AD & AND   \\
+Angola & AO & AGO \\
+\hline
+\end{tabular}
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+ cell1 & cell2 & cell3 \\ 
+ cell4 & cell5 & cell6 \\ 
+ cell7 & cell8 & cell9 \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+
 
 \subsection{pktgen Machine (126)}
 
@@ -115,8 +149,6 @@ pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=
 	-- -T -P -m "[8:40-43/48-51].0"
 \end{lstlisting}
 
-Verify the \texttt{openvswitch.service} is running with systemctl
-
 \subsection{testpmd (124)}
 
 % Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=rxonly  --port-topology=chained
@@ -124,6 +156,12 @@ Verify the \texttt{openvswitch.service} is running with systemctl
 Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 
 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a 
 	--rss-ip --forward-mode=rxonly  --port-topology=chained
+\end{lstlisting}
+
+\subsection{Starting Test}
+
+\begin{lstlisting}[escapechar=!]
+Pktgen:/> start 0
 \end{lstlisting}
 
 \begin{lstlisting}
@@ -140,12 +178,6 @@ testpmd> show port stats all
   Tx-pps:            0
   ############################################################################
 testpmd> 
-\end{lstlisting}
-
-\subsection{Starting Test}
-
-\begin{lstlisting}[escapechar=!]
-Pktgen:/> start 0
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -237,9 +269,9 @@ testpmd>
 
 \subsection{testpmd (124)}
 
-% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0-- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io 
+% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io 
 \begin{lstlisting}[escapechar=!]
-# testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0-- --txd=512 
+# testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 
 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \end{lstlisting}
 
