@@ -110,6 +110,8 @@ Any refernce to another section will be a clickable link to that section.
 \hline
  pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
  rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+\hline
+\rowcolor{yellow}
 \% rate & 99.9 & 72.5 & 100 & x \\
  \hline
 \end{tabular}
@@ -154,11 +156,13 @@ testpmd> show port stats all
 testpmd> 
 \end{lstlisting}
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% I/O forward across 2 ports
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{I/O forward bandwidth using testpmd across ports}
-
 
 \begin{figure}[H]
 \caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
@@ -176,6 +180,8 @@ testpmd>
 \hline
  pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
  rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+\hline
+\rowcolor{yellow}
 \% rate & 99.9 & 72.5 & 100 & x \\
  \hline
 \end{tabular}
@@ -236,6 +242,9 @@ testpmd>
 
 \end{lstlisting}
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% I/O forward across 1 port
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,6 +268,8 @@ testpmd>
 \hline
  pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
  rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+\hline
+\rowcolor{yellow}
 \% rate & 99.9 & 72.5 & 100 & x \\
  \hline
 \end{tabular}
@@ -268,7 +279,7 @@ testpmd>
 
 % ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8-11/16-19:40-43/48-51].0"
 \begin{lstlisting}
-# pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 
+pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 
 	--socket-mem=4096,4096 -- -T -P -m "[8-11/16-19:40-43/48-51].0"
 \end{lstlisting}
 
@@ -276,7 +287,7 @@ testpmd>
 
 % testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io 
 \begin{lstlisting}[escapechar=!]
-# testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 
+Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 
 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \end{lstlisting}
 
