@@ -120,7 +120,7 @@ Any refernce to another section will be a clickable link to that section.
  \hline
  pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
  pktgen & 59.1 & 1 & 0 & 0  \\ 
- rx only & 0 & 0 & 0 & 0 \\ 
+ rx only & 14.938 & 0 & 0 & 0 \\ 
  \hline
 \end{tabular}
 \end{center}
@@ -152,7 +152,7 @@ Pktgen:/> start 0
 testpmd> show port stats all
 
   ######################## NIC statistics for port 0  ########################
-  RX-packets: 16519665   RX-missed: 48236188   RX-bytes:  3885350400
+  RX-packets: 16519665   RX-missed: 0   RX-bytes:  3885350400
   RX-errors: 0
   RX-nombuf:  0         
   TX-packets: 16         TX-errors: 0          TX-bytes:  0
@@ -186,10 +186,10 @@ pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=
 
 \subsection{testpmd (124)}
 
-% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
+% testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \begin{lstlisting}[escapechar=!]
-testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512
---rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
+Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -w 0002:01:00.1 -- --txd=512
+--rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \end{lstlisting}
 
 \subsection{Starting Test}
