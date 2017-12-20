@@ -58,45 +58,32 @@
 \newpage
 
 \section{Machine Information}
+%to many 1 line explanations that should not be indented.
+{\setlength{\parindent}{0cm}
 
-The purpose of this test plan is to test Open vSwitch (OvS). 
-The document provides commands and the expected output.
-This test plan aims to provide a pass/failure reference point based on the output of the command.
-Output may change over time due to the nature of this project, however certain information should still be retained from output to signify a pass or failure.
-Important information from output will be \setlength{\fboxsep}{0pt}\colorbox{yellow}{{\textcolor{red}{highlited}}}. 
-Verify that your output has something similar to the highlited parts of the output.
+Using 2 Power 8 machines each with 2 XL710 i40e 40Gbs NICs.
 
-Each section is self-containing such that you may skip around the document.
-After setup and execution of tests, the test concludes with a verification section. 
-Highlited output missing from verification section would indicate a failure.
-If there is a possibility of a failure refer to the Appendix first.
-Make sure you remove previous bridges or interfaces before moving to the next test in case there is a naming conflict.
-
-This test plan utilizes network name spaces (ns) to create virtual network endpoints in order to test the features of OvS. 
-Each network name space will be an endpoint on our virtual switch. 
-The picture below represents the basic network topology this test plan will use. 
-
-Looking at the diagram above we see 3 name spaces. One root name space, and 2 network name spaces. The veth peers for \texttt{namespace1} are \texttt{tap1} and \texttt{p1}. \texttt{tap1} device exists only inside namespace1. Much similar to a VM having a different Ethernet interface than the host machine. \textit{Please note that root namespace and host are used interchanbly throughout the document.} \texttt{p1} exists on the host and in this picture it has been added as a port to the OvS bridge named \texttt{br-1}. Additional information about name spaces may be found in appendix \ref{appendix:ns}.
-
-Commands below are going to be used most often in this test plan
+Both machines have the following configurations:
 \begin{itemize}
-\item \texttt{ovs-vsctl} : Used for configuring the ovs-vswitchd configuration database (known as ovs-db) 
-\item \texttt{ovs-ofctl} : A command line tool for monitoring and administering OpenFlow switches 
-%The follow are not used yet
-%\item \texttt{ovs-dpctl} : Used to administer Open vSwitch datapaths
-\item \texttt{ovs-appctl} : A utility that sends commands to and controls Open vSwitch daemons 
-\item \texttt{ovsdb-tool} : Open vSwitch database management utility
-\item \texttt{netperf} : a network performance benchmark
-\item \texttt{tcpdump} : dump traffic on a network
-\item \texttt{netcat} : create, concatenate, and redirect sockets. 
-%\item \texttt{ovsdb-server} : TODO
-%\item \texttt{ip addr} :  show or manipulate routing, devices, policy routing and tunnels
-%\item \texttt{ip netns exec} : process network namespace management
-%\item \texttt{modprobe} : Add or remove modules from Linux kernel
-%\item \texttt{modinfo} : Show information about a Linux kernel module
-%\item \texttt{ps} : Report a snapshot of the current processes
+\item smt=off
+\item NUMA=off
+\item rx buffer 1024
+\item tx buffer 512
+\item hugepage size 16mb
+\item number of hugepages 1024
 \end{itemize}
 
+The machine running pktgen, sending traffic, is Ubuntu 17.04 with kernel 4.10.0-35-generic.
+\begin{lstlisting}[escapechar=!]
+$ cat /proc/cmdline
+hugepages=1024 isolcpus=40-43,48-51,56-59
+\end{lstlisting}
+ 
+DPDK is running on RHEL 7.4 with kernel 3.10.0-693.1.1.el7.ppc64le
+\begin{lstlisting}[escapechar=!]
+$ cat /proc/cmdline
+hugepages=1024 isolcpus=40-43,48-51,56-59 numa=off
+\end{lstlisting}
 Any refernce to another section will be a clickable link to that section.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,8 +155,7 @@ testpmd>
 %%% I/O forward across 2 ports
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{I/O forward bandwidth using testpmd across ports}
-%to many 1 line explanations that should not be indented.
-{\setlength{\parindent}{0cm}
+
 
 \begin{figure}[H]
 \caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
@@ -256,7 +242,7 @@ testpmd>
 % testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io 
 \begin{lstlisting}[escapechar=!]
 # testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 
---rxd=512 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
+--rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
 \end{lstlisting}
 
 \subsection{Starting Test}
