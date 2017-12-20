@@ -107,6 +107,7 @@ Any refernce to another section will be a clickable link to that section.
 \multicolumn{5}{|c|}{RX Only Results} \\
  \hline
  pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+\hline
  pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
  rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
 \% rate & 99.9 & 72.5 & 100 & x \\
@@ -163,6 +164,22 @@ testpmd>
 \caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
 \hbox{\hspace{-0.5cm} \includegraphics[scale=0.6]{i-o-2-ports} }
 \end{figure}
+
+\subsection{Results}
+\large
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\multicolumn{5}{|c|}{I/O Forward Across 2 Ports Results} \\
+ \hline
+ pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+\hline
+ pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
+ rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+\% rate & 99.9 & 72.5 & 100 & x \\
+ \hline
+\end{tabular}
+\end{center}
 
 \subsection{pktgen Machine (126)}
 
@@ -230,6 +247,22 @@ testpmd>
 \caption{Path of ICMP packet from \texttt{namespace1} through \texttt{br-1} to \texttt{namespace2}}
 \hbox{\hspace{-0.5cm} \includegraphics[scale=0.6]{i-o-1-port} }
 \end{figure}
+
+\subsection{Results}
+\large
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| }
+\hline
+\multicolumn{5}{|c|}{I/O Forward with Same Port Results} \\
+ \hline
+ pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+\hline
+ pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
+ rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+\% rate & 99.9 & 72.5 & 100 & x \\
+ \hline
+\end{tabular}
+\end{center}
 
 \subsection{pktgen Machine (126)}
 
