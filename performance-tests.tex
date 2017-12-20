@@ -112,21 +112,18 @@ Any refernce to another section will be a clickable link to that section.
 \hbox{\includegraphics[scale=0.6]{rx-only} }
 \end{figure}
 
-
-
+\subsection{Results}
 \begin{center}
 \begin{tabular}{ |c|c|c|c|c| }
 \hline
 \multicolumn{5}{|c|}{RX Only Results} \\
  \hline
- pkt size  & 64 & 128 & 256 & 512 \\ 
- pktgen & 59.1 & 128 & 256 & 512  \\ 
- rx only & 64 & 128 & 256 & 512 \\ 
+ pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+ pktgen & 59.1 & 1 & 0 & 0  \\ 
+ rx only & 0 & 0 & 0 & 0 \\ 
  \hline
 \end{tabular}
 \end{center}
-
-
 
 \subsection{pktgen Machine (126)}
 
@@ -138,10 +135,10 @@ pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=
 
 \subsection{testpmd (124)}
 
-% Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=rxonly  --port-topology=chained
+% Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=rxonly  --port-topology=chained
 \begin{lstlisting}[escapechar=!]
 Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 4096 -w 0002:01:00.0 
--- --txd=512 --rxd=512 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a 
+-- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q--txq=$Q --nb-cores=$Q -i -a 
 	--rss-ip --forward-mode=rxonly  --port-topology=chained
 \end{lstlisting}
 
