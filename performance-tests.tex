@@ -67,7 +67,7 @@ Both machines have the following configurations:
 \begin{itemize}
 \item smt=off
 \item NUMA=off
-\item rx buffer 1024
+\item rx buffer 1024 (except for I/O with 2 ports)
 \item tx buffer 512
 \item hugepage size 16mb
 \item number of hugepages 1024
@@ -102,17 +102,17 @@ Any refernce to another section will be a clickable link to that section.
 \subsection{Results}
 \large
 \begin{center}
-\begin{tabular}{ |c|c|c|c|c| }
+\begin{tabular}{ |c|c|c|c|c|c| }
 \hline
-\multicolumn{5}{|c|}{RX Only Results} \\
+\multicolumn{6}{|c|}{RX Only Results} \\
  \hline
- pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+ pkt size (bytes) & 64 & 128 & 256 & 512 & 1024\\ 
 \hline
- pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
- rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+ pktgen Mpps & 59.96 & 34.318 & 18.15 & 9.42 & 4.79\\ 
+ rx only Mpps & 24.86 & 24.88 & 24.27 & 12.59 & 6.41\\ 
 \hline
 \rowcolor{yellow}
-\% rate & 99.9 & 72.5 & 100 & x \\
+\% rate & 41.46 & 72.5 & ? & ? & ?\\
  \hline
 \end{tabular}
 \end{center}
@@ -172,17 +172,17 @@ testpmd>
 \subsection{Results}
 \large
 \begin{center}
-\begin{tabular}{ |c|c|c|c|c| }
+\begin{tabular}{ |c|c|c|c|c|c| }
 \hline
-\multicolumn{5}{|c|}{I/O Forward Across 2 Ports Results} \\
+\multicolumn{6}{|c|}{RX Only Results} \\
  \hline
- pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+ pkt size (bytes) & 64 & 128 & 256 & 512 & 1024\\ 
 \hline
- pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
- rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+ pktgen Mpps & 59.96 & 34.06 & 18.15 & 9.42 & 4.79\\ 
+ I/O Mpps & 20.12 & 20.12 & 20.12 & 12.59 & 6.41\\ 
 \hline
 \rowcolor{yellow}
-\% rate & 99.9 & 72.5 & 100 & x \\
+\% rate & 34.07 & 59.07 & ? & ? & ?\\
  \hline
 \end{tabular}
 \end{center}
@@ -258,17 +258,17 @@ testpmd>
 \subsection{Results}
 \large
 \begin{center}
-\begin{tabular}{ |c|c|c|c|c| }
+\begin{tabular}{ |c|c|c|c|c|c| }
 \hline
-\multicolumn{5}{|c|}{I/O Forward with Same Port Results} \\
+\multicolumn{6}{|c|}{RX Only Results} \\
  \hline
- pkt size (bytes) & 64 & 128 & 256 & 512 \\ 
+ pkt size (bytes) & 64 & 128 & 256 & 512 & 1024\\ 
 \hline
- pktgen & 14.961 & 34.318 & 18.176 & 9.41  \\ 
- rx only & 14.938 & 24.885 & 18.176 & 16.848 \\ 
+ pktgen Mpps & 59.96 & 34.06 & 18.15 & 9.42 & 4.79\\ 
+ I/O Mpps & 23.01 & 23 & 23 & 12.59 & 6.41\\ 
 \hline
 \rowcolor{yellow}
-\% rate & 99.9 & 72.5 & 100 & x \\
+\% rate & 38.38 & 67.53 & ? & ? & ?\\
  \hline
 \end{tabular}
 \end{center}
@@ -313,6 +313,14 @@ testpmd> show port stats all
   ############################################################################
 testpmd>
 \end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PVP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Q=8; testpmd -l 0,8,16,24,32,40,48,56,64,72 -m 2048 -w 0002:01:00.0 -w 0002:01:00.1 --vdev 'net_vhost0,iface=/var/run/openvswitch/vhost-vm1' --vdev 'net_vhost1,iface=/var/run/openvswitch/vhost-vm2' -- --txd=512 --rxd=1024 --mbcache=512 --rxq=$Q --txq=$Q --nb-cores=$Q -i -a --rss-ip --forward-mode=io
+
+% ./pktgen -l 0-3,8-11,16-19,24-27,32-35,40-43,48-51,56-59,64-67,72-75 --socket-mem=4096,4096 -- -T -P -m "[8:40-43/48-51].0,[56-59/64-67:72].1"
 
 }%for no indents on one-liners
 
